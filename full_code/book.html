@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trip Booking</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .bag-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+      font-size: 24px;
+    }
+    .trip-popup {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 20px;
+      width: 300px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      z-index: 100;
+    }
+    .trip-popup.open {
+      display: block;
+    }
+    .trip-list {
+      list-style: none;
+      padding: 0;
+    }
+    .trip-list li {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .trip-list li button {
+      background-color: red;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .add-trip {
+      margin-top: 20px;
+    }
+    .add-trip input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+    .add-trip button {
+      width: 100%;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      padding: 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Bag Icon -->
+<div class="bag-icon" id="bagIcon">
+  <i class="fas fa-shopping-bag"></i>
+</div>
+
+<!-- Trip Plans Popup -->
+<div class="trip-popup" id="tripPopup">
+  <h3>Your Trip Plans</h3>
+  <ul class="trip-list" id="tripList">
+    <!-- List of trips will be displayed here -->
+  </ul>
+
+  <!-- Add new trip plan -->
+  <div class="add-trip">
+    <input type="text" id="tripInput" placeholder="Enter trip plan name">
+    <button onclick="addTrip()">Add Trip</button>
+  </div>
+</div>
+
+<!-- JavaScript for handling trip plans -->
+<script>
+  const bagIcon = document.getElementById('bagIcon');
+  const tripPopup = document.getElementById('tripPopup');
+  const tripList = document.getElementById('tripList');
+
+  // Toggle popup visibility
+  bagIcon.addEventListener('click', () => {
+    tripPopup.classList.toggle('open');
+  });
+
+  // Add new trip to the list
+  function addTrip() {
+    const tripInput = document.getElementById('tripInput');
+    const tripName = tripInput.value.trim();
+
+    if (tripName) {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span>${tripName}</span>
+        <button onclick="removeTrip(this)">Remove</button>
+      `;
+      tripList.appendChild(li);
+      tripInput.value = '';
+    } else {
+      alert('Please enter a valid trip name');
+    }
+  }
+
+  // Remove trip from the list
+  function removeTrip(button) {
+    const li = button.parentElement;
+    li.remove();
+  }
+</script>
+
+</body>
+</html>
